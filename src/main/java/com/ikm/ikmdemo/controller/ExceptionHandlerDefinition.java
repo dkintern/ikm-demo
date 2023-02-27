@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ExceptionHandlerDefinition {
@@ -27,14 +28,28 @@ public class ExceptionHandlerDefinition {
     @Data
     public static class Error {
         String message;
-        List<FieldError> cause;
+        List<WrongField> cause;
+    }
+
+    @Data
+    public static class WrongField {
+        String field;
+        Object value;
+        String cause;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Error> validationHandler(MethodArgumentNotValidException ve) {
         Error error = new Error();
         error.setMessage("validation failed");
-        error.setCause(ve.getFieldErrors());
+        error.setCause(ve.getFieldErrors().stream().map(err -> {
+            WrongField field = new WrongField();
+            field.setField(err.getField());
+            field.setValue(err.getRejectedValue());
+            field.setCause(err.getCode());
+            return field;
+        }).collect(Collectors.toList())
+        );
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
