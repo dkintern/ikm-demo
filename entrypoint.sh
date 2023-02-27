@@ -1,1 +1,1 @@
-mvn spring-boot:run
+java -jar target/ikm-demo-0.0.1-SNAPSHOT.jar

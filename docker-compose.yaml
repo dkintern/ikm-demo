@@ -1,6 +1,6 @@
 version: "0.1"
 services:
-  spring-boot:
+  api-server:
     image: ikm-demo
     build:
       context: .
