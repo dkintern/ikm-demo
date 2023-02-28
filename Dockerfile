@@ -1,12 +1,11 @@
-FROM maven:3.6.3-jdk-11-slim
+FROM openjdk:21-jdk-slim
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-#COPY target/ikm-demo-0.0.1-SNAPSHOT.jar ikm-demo-0.0.1-SNAPSHOT.jar
-
-ENV JAVA_VERSION jdk-11.0.11+9
-COPY slim-java* /usr/local/bin/
-
+#"COPY entrypoint.sh /usr/local/bin/entrypoint.sh"
+RUN mkdir /java
+WORKDIR /java
+COPY target/ikm-demo-0.0.1-SNAPSHOT.jar /java/ikm-demo-0.0.1-SNAPSHOT.jar
+EXPOSE 7890
+ENTRYPOINT ["java", "-jar", "ikm-demo-0.0.1-SNAPSHOT.jar"]
 #Start application
-WORKDIR /usr/src/mymaven
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["bash"]
+#ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+#CMD ["bash"]

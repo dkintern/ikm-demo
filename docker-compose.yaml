@@ -1,12 +1,10 @@
 version: "0.1"
 services:
   api-server:
-    image: ikm-demo
-    build:
-      context: .
+    image: test
     ports:
       - "7890:7890"
       - "5005:5005"
-    volumes:
-      - ${APPLICATION_ROOT_FOLDER}:/usr/src/mymaven
-      - ${MAVEN_SETTINGS_FOLDER}:/root/.m2
+#    volumes:
+#      - ${APPLICATION_ROOT_FOLDER}:/usr/src/mymaven
+#      - ${MAVEN_SETTINGS_FOLDER}:/root/.m2

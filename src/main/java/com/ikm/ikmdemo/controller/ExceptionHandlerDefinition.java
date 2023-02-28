@@ -13,8 +13,6 @@ package com.ikm.ikmdemo.controller;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,7 +44,7 @@ public class ExceptionHandlerDefinition {
             WrongField field = new WrongField();
             field.setField(err.getField());
             field.setValue(err.getRejectedValue());
-            field.setCause(err.getCode());
+            field.setCause(err.getDefaultMessage());
             return field;
         }).collect(Collectors.toList())
         );
